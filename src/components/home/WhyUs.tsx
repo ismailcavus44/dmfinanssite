@@ -145,7 +145,7 @@ export default function WhyUs() {
               <div 
                 key={step.number} 
                 className="relative flex items-start"
-                ref={(el) => (cardRefs.current[index] = el)}
+                ref={(el) => { cardRefs.current[index] = el; }}
                 data-index={index}
                 style={{
                   opacity: visibleCards.includes(index) ? 1 : 0,
