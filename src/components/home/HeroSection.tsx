@@ -13,7 +13,7 @@ const slides = [
   },
   {
     id: 2,
-    title: "Profesyonel Finansal Değerlendirme",
+    title: "Ön Ödemesiz Borç Kapatma Hizmeti",
     eyebrow: "FİNANSAL ANALİZ HİZMETİ",
     backgroundImage: "/images/hero-gorsel-2.png",
     backgroundPosition: "center center"
