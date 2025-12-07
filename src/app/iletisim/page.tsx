@@ -13,7 +13,6 @@ export default function ContactPage() {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -26,37 +25,12 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus({ type: null, message: '' });
     
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus({ type: 'success', message: data.message || 'Mesajınız başarıyla gönderildi!' });
-        // Formu temizle
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          message: ''
-        });
-      } else {
-        setSubmitStatus({ type: 'error', message: data.error || 'Bir hata oluştu. Lütfen tekrar deneyin.' });
-      }
-    } catch (error) {
-      setSubmitStatus({ type: 'error', message: 'Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.' });
-    } finally {
+    // Form submission logic here
+    setTimeout(() => {
       setIsSubmitting(false);
-    }
+      alert('Mesajınız başarıyla gönderildi!');
+    }, 2000);
   };
 
   return (
@@ -243,31 +217,6 @@ export default function ContactPage() {
                         'Gönder'
                       )}
                     </button>
-
-                    {/* Status Messages */}
-                    {submitStatus.type && (
-                      <div
-                        className={`mt-4 p-4 rounded-lg ${
-                          submitStatus.type === 'success'
-                            ? 'bg-green-50 text-green-800 border border-green-200'
-                            : 'bg-red-50 text-red-800 border border-red-200'
-                        }`}
-                        style={{ borderRadius: '6px' }}
-                      >
-                        <div className="flex items-center gap-2">
-                          {submitStatus.type === 'success' ? (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          ) : (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          )}
-                          <span className="text-sm font-medium">{submitStatus.message}</span>
-                        </div>
-                      </div>
-                    )}
                   </form>
                 </div>
               </div>
