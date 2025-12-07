@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhiteLogo from "@/components/layout/WhiteLogo";
+import MobileCTABar from "@/components/layout/MobileCTABar";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
         <WhiteLogo />
         <main className="flex-1">{children}</main>
         <Footer />
+        <MobileCTABar />
       </body>
     </html>
   );
