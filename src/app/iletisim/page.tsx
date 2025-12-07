@@ -8,15 +8,13 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    email: '',
     phone: '',
     retirementStatus: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showRetirementOptions, setShowRetirementOptions] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -26,13 +24,6 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Emeklilik durumu kontrolü
-    if (showRetirementOptions && !formData.retirementStatus) {
-      alert('Lütfen emeklilik durumunuzu seçin.');
-      return;
-    }
-    
     setIsSubmitting(true);
     
     // Form submission logic here
@@ -159,24 +150,6 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    {/* Email */}
-                    <div>
-                      <label htmlFor="email" className="block text-sm text-gray-600 font-medium mb-1.5">
-                        E-Posta
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="ornek@email.com"
-                        className="w-full h-12 px-4 text-[15px] bg-[#F9FAFB] border border-[#E5E7EB] placeholder-[#9CA3AF] focus:border-[#2151F5] focus:ring-4 focus:ring-[#2151F5]/10 focus:outline-none transition-all"
-                        style={{ borderRadius: '6px' }}
-                        required
-                      />
-                    </div>
-
                     {/* Phone */}
                     <div>
                       <label htmlFor="phone" className="block text-sm text-gray-600 font-medium mb-1.5">
@@ -196,58 +169,22 @@ export default function ContactPage() {
 
                     {/* Retirement Status */}
                     <div>
-                      <div className="flex items-start gap-3 mb-3">
-                        <input
-                          type="checkbox"
-                          id="retirementCheckbox"
-                          checked={showRetirementOptions}
-                          onChange={(e) => {
-                            setShowRetirementOptions(e.target.checked);
-                            if (!e.target.checked) {
-                              setFormData(prev => ({ ...prev, retirementStatus: '' }));
-                            }
-                          }}
-                          className="mt-1 w-4 h-4 text-[#2151F5] bg-[#F9FAFB] border-[#E5E7EB] rounded focus:ring-[#2151F5] focus:ring-2"
-                        />
-                        <label htmlFor="retirementCheckbox" className="text-sm text-gray-600 font-medium cursor-pointer">
-                          Emeklilik durumunuzu belirtin <span className="text-red-500">*</span>
-                        </label>
-                      </div>
-                      
-                      {showRetirementOptions && (
-                        <div className="ml-7 space-y-2">
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="radio"
-                              id="retired"
-                              name="retirementStatus"
-                              value="emekliyim"
-                              checked={formData.retirementStatus === 'emekliyim'}
-                              onChange={(e) => setFormData(prev => ({ ...prev, retirementStatus: e.target.value }))}
-                              className="w-4 h-4 text-[#2151F5] bg-[#F9FAFB] border-[#E5E7EB] focus:ring-[#2151F5] focus:ring-2"
-                              required={showRetirementOptions}
-                            />
-                            <label htmlFor="retired" className="text-sm text-gray-700 cursor-pointer">
-                              Emekliyim
-                            </label>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="radio"
-                              id="notRetired"
-                              name="retirementStatus"
-                              value="emekli-değilim"
-                              checked={formData.retirementStatus === 'emekli-değilim'}
-                              onChange={(e) => setFormData(prev => ({ ...prev, retirementStatus: e.target.value }))}
-                              className="w-4 h-4 text-[#2151F5] bg-[#F9FAFB] border-[#E5E7EB] focus:ring-[#2151F5] focus:ring-2"
-                              required={showRetirementOptions}
-                            />
-                            <label htmlFor="notRetired" className="text-sm text-gray-700 cursor-pointer">
-                              Emekli değilim
-                            </label>
-                          </div>
-                        </div>
-                      )}
+                      <label htmlFor="retirementStatus" className="block text-sm text-gray-600 font-medium mb-1.5">
+                        Emeklilik durumunuzu belirtin <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        id="retirementStatus"
+                        name="retirementStatus"
+                        value={formData.retirementStatus}
+                        onChange={handleInputChange}
+                        className="w-full h-12 px-4 text-[15px] bg-[#F9FAFB] border border-[#E5E7EB] placeholder-[#9CA3AF] focus:border-[#2151F5] focus:ring-4 focus:ring-[#2151F5]/10 focus:outline-none transition-all"
+                        style={{ borderRadius: '6px' }}
+                        required
+                      >
+                        <option value="">Seçiniz...</option>
+                        <option value="emekliyim">Emekliyim</option>
+                        <option value="emekli-değilim">Emekli değilim</option>
+                      </select>
                     </div>
 
                     {/* Message */}
